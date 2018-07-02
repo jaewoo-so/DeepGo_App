@@ -4,9 +4,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeepGo_App"
+        xmlns:uc="clr-namespace:DeepGo_App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="800" Width="1225" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+
+       
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="3" Margin="5">
+                <uc:MenuLeft x:Name="menuleft"/>
+            </Border>
+                
+            <Border Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="3" Margin="5">
+                <DataGrid x:Name="dtgMain" Margin="1" Grid.Row="1" FontSize="12"  
+                      AutoGenerateColumns="False" 
+                      SelectedCellsChanged="dtgMain_SelectedCellsChanged" 
+                      HorizontalAlignment="Center" 
+                      HorizontalContentAlignment="Center" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  x:Name="cellno" Header="No."  Binding="{Binding no}"   Width="*"  ElementStyle="{StaticResource CenterAligned}"/>
+                        <DataGridTextColumn  x:Name="cellname" Header="Name" Binding="{Binding name}" Width="5*"  ElementStyle="{StaticResource CenterAligned}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Column="1" BorderBrush="SteelBlue" BorderThickness="3" Margin="5">
+            <uc:MainDisplay x:Name="cvsMainDisplay" Grid.Column="1" Background="Transparent" />
+        </Border>
+
+        <Border Grid.Column="2" BorderBrush="SteelBlue" BorderThickness="3" Margin="5">
+          
+        </Border>
+
+
+
     </Grid>
 </Window>

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DeepGo_CoreEngine
 {
-    class Core_Crop
+    public class CoreData
     {
-
+        public string[] ImgFileList;
+        public int CurrentImgIdx;
 
 
     }
