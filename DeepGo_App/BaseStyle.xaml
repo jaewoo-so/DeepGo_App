@@ -5,7 +5,7 @@
     <Style x:Key="BtnBase" TargetType="Button">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Foreground" Value = "White"/>
-        <Setter Property="Background" Value = "SandyBrown"/>
+        <Setter Property="Background" Value = "{DynamicResource AccentColorBrush}"/>
     </Style>
 
     <Style x:Key="LblBase" TargetType="Label">

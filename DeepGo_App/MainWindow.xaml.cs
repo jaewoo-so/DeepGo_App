@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
@@ -33,7 +34,7 @@ namespace DeepGo_App
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         List<GridData> PathList;
 
@@ -52,9 +53,6 @@ namespace DeepGo_App
             dtgMain.Items.Refresh();
 
         }
-       
-
-
 
         public void SetDropFiles(List<string> files)
         {
@@ -68,7 +66,7 @@ namespace DeepGo_App
             dtgMain.Items.Refresh();
 
             cellno.Width   = DataGridLength.Auto;
-            cellname.Width = DataGridLength.Auto;
+            //cellname.Width = DataGridLength.Auto;
             #endregion
         }
 
