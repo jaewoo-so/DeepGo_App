@@ -18,11 +18,18 @@ namespace DeepGo_App
     /// <summary>
     /// Interaction logic for MenuLeft.xaml
     /// </summary>
+
+    public delegate void BtnEvt( string name );
+
     public partial class MenuLeft : UserControl
     {
+        public event BtnEvt evtBtn;
         public MenuLeft()
         {
             InitializeComponent();
         }
+
+        private void btnClick( object sender, RoutedEventArgs e )
+            => evtBtn( ( sender as Button ).Name );
     }
 }

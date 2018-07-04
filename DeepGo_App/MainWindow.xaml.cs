@@ -74,12 +74,34 @@ namespace DeepGo_App
         private void Window_Loaded( object sender, RoutedEventArgs e )
         {
             cvsMainDisplay.evtDropFiles += SetDropFiles;
+            ucmenuleft.evtBtn += btnClick;
         }
 
         private void Window_SizeChanged( object sender, SizeChangedEventArgs e )
         {
             cvsMainDisplay.ResetImage();
         }
+
+        private void btnClick( string name )
+        {
+            switch ( name )
+            {
+                case "btnLoad":
+                    "".Print();
+                    break;
+
+                case "btnReset":
+                    Console.WriteLine();
+                    break;
+
+                case "btnSave":
+                    break;
+
+                case "btnHide":
+                    break;
+            }
+        }
+
         #endregion
 
 
@@ -87,7 +109,10 @@ namespace DeepGo_App
         private void dtgMain_SelectedCellsChanged( object sender, SelectedCellsChangedEventArgs e )
         {
             var index = dtgMain.SelectedIndex.Print();
-            cvsMainDisplay.SetImage( PathList[index].path );
+            if ( index >= 0 )
+            {
+                cvsMainDisplay.SetImage( PathList[index].path );
+            }
         }
         #endregion
     }

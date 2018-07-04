@@ -17,6 +17,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using Emgu.CV.CvEnum;
 using DeepGo_CoreEngine;
+using SpeedyCoding;
 using static DeepGo_CoreEngine.Core_Util;
 using System.IO;
 
@@ -43,6 +44,7 @@ namespace DeepGo_App
             ImgBack.Height = cvsMainDisplay.ActualHeight;
             ImgBack.Width = cvsMainDisplay.ActualWidth;
             ImgBack.Source = new CImg( filepath ).ToBitmapSource();
+
         }
 
         public void ResetImage()

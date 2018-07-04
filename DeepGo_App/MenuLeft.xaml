@@ -7,8 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
     <UniformGrid Rows="2" Columns="2">
-        <Button x:Name="btnLoad"  Content="Load"  Style="{StaticResource BtnBase}"  />
-        <Button x:Name="btnReset" Content="Reset" Style="{StaticResource BtnBase}"  />
-        <Button x:Name="btnSave" Content="Save"   Style="{StaticResource BtnBase}"  />
+        <Button x:Name="btnLoad"  Content="Load"  Style="{StaticResource BtnBase}"  Click="btnClick" />
+        <Button x:Name="btnReset" Content="Reset" Style="{StaticResource BtnBase}"  Click="btnClick" />
+        <Button x:Name="btnSave" Content="Save"   Style="{StaticResource BtnBase}"  Click="btnClick" />
+        <Button x:Name="btnHide" Content="Hide"   Style="{StaticResource BtnBase}"  Click="btnClick" />
     </UniformGrid>
 </UserControl>

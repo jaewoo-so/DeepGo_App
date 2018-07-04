@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DeepGo_CoreEngine</RootNamespace>
     <AssemblyName>DeepGo_CoreEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +51,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ApplicationUtilTool">
+      <HintPath>..\dll\ApplicationUtilTool.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.UI, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.UI.dll</HintPath>
     </Reference>
@@ -79,6 +83,7 @@
     <Compile Include="CoreData.cs" />
     <Compile Include="Core_Crop.cs" />
     <Compile Include="Core_DeepGo.cs" />
+    <Compile Include="Core_ResData.cs" />
     <Compile Include="Core_Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
