@@ -23,6 +23,7 @@ using SpeedyCoding;
 using DeepGo_CoreEngine;
 using static DeepGo_CoreEngine.CoreData;
 using static DeepGo_CoreEngine.Core_Util;
+using System.Windows.Forms;
 
 #endregion
 
@@ -37,7 +38,7 @@ namespace DeepGo_App
     public partial class MainWindow : MetroWindow
     {
         List<GridData> PathList;
-
+        List<IDPersonData> DataInfoAll;
 
         public MainWindow()
         {
@@ -56,19 +57,29 @@ namespace DeepGo_App
 
         public void SetDropFiles(List<string> files)
         {
+            //global
             PathList = files.Select( ( x, i ) => new GridData( i, x ) ).ToList();
+            DisplayPathImg();
+        }
 
-            #region Display     
-            cvsMainDisplay.SetImage( files.First() );
+        public void SetLoadFile( List<IDPersonData> dataInfoAll )
+        {
+            //global
+            PathList = dataInfoAll.ToGridDataList();
+            DisplayPathImg();
+        }
+
+        public void DisplayPathImg()
+        {
+            cvsMainDisplay.SetImage( PathList.First().path );
             cvsMainDisplay.Background = Brushes.Black;
 
             dtgMain.ItemsSource = PathList;
             dtgMain.Items.Refresh();
 
-            cellno.Width   = DataGridLength.Auto;
-            //cellname.Width = DataGridLength.Auto;
-            #endregion
+            cellno.Width = DataGridLength.Auto;
         }
+
 
         #region Window Event
         private void Window_Loaded( object sender, RoutedEventArgs e )
@@ -87,7 +98,14 @@ namespace DeepGo_App
             switch ( name )
             {
                 case "btnLoad":
-                    "".Print();
+                    OpenFileDialog ofd = new OpenFileDialog();
+                    if ( ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK )
+                    {
+                        //global
+                        DataInfoAll = ofd.FileName.ResultToDataClass();
+                    }
+                    SetLoadFile( DataInfoAll );
+                    // Create Second Box 
                     break;
 
                 case "btnReset":
@@ -108,7 +126,7 @@ namespace DeepGo_App
         #region DataGrid
         private void dtgMain_SelectedCellsChanged( object sender, SelectedCellsChangedEventArgs e )
         {
-            var index = dtgMain.SelectedIndex.Print();
+            var index = dtgMain.SelectedIndex;
             if ( index >= 0 )
             {
                 cvsMainDisplay.SetImage( PathList[index].path );

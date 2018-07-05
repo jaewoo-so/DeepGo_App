@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace DeepGo_CoreEngine
 {
-    class Core_DeepGo
+    public class Core_DeepGo
     {
+        public void CreateButton( List<IDPersonData> idp, int idx )
+        {
+            var currentPid = idp
+            var selectedData = idp.
+
+
+        }
+
+
+
     }
 }

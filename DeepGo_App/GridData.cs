@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeepGo_CoreEngine;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -37,4 +38,29 @@ namespace DeepGo_App
         }
 
     }
+
+    public static class Ext
+    {
+        public static List<GridData> ToGridDataList( this List<IDPersonData> dataInfoAll )
+        {
+            List<GridData> outputlist = new List<GridData>();
+            int k = 0;
+            for ( int i = 0 ; i < dataInfoAll.Count ; i++ )
+            {
+                for ( int j = 0 ; j < dataInfoAll[i].IDDocDataList.Count ; j++ )
+                {
+                    var imgpath = dataInfoAll[i].IDDocDataList[j].ImgPath;
+                    outputlist.Add( new GridData( k, imgpath ) );
+                    k++;
+                }
+            }
+            return outputlist;
+        }
+
+
+
+
+    }
+
+
 }

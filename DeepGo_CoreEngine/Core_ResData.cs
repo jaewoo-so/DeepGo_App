@@ -6,18 +6,43 @@ using System.Threading.Tasks;
 using SpeedyCoding;
 using static ApplicationUtilTool.FileIO.CsvTool;
 
+
 namespace DeepGo_CoreEngine
 {
-    public class ResDocData 
+
+    public class ResDocData
     {
-        public string IDPerson;
-        public string IDDoc;
-        public string ImgPath;
-        public int BarcodeXPerson;
-        public int BarcodeYPerson;
-        public int BarcodeXDoc;
-        public int BarcodeYDoc;
-        public List<BoxInfo> BoxInfoList;
+        public string       IDPerson         ;
+        public string       IDDoc            ;
+        public string       ImgPath          ;
+        public int          BarcodeXPerson    ;
+        public int          BarcodeYPerson    ;
+        public int          BarcodeXDoc       ;
+        public int          BarcodeYDoc       ;
+        public List<BoxInfo> BoxInfoList       ;
+
+        public ResDocData( string idp , string[] data, List<BoxInfo> infolist )
+        {
+            IDPerson = idp;
+            IDDoc = data[0];
+            ImgPath = data[1];
+            BarcodeXPerson = int.Parse( data[2] );
+            BarcodeYPerson = int.Parse( data[3] );
+            BarcodeXDoc = int.Parse( data[4] );
+            BarcodeYDoc = int.Parse( data[5] );
+            BoxInfoList = infolist;
+        }
+
+        public ResDocData( string idd, string imgpath, int barpx, int barpy, int bardx, int bardy, List<BoxInfo> infolist )
+        {
+            IDDoc = idd;
+            ImgPath = imgpath;
+            BarcodeXPerson = barpx;
+            BarcodeYPerson = barpy;
+            BarcodeXDoc = bardx;
+            BarcodeYDoc = bardy;
+            BoxInfoList = infolist;
+        }
     }
 
     public struct BoxInfo
@@ -26,20 +51,30 @@ namespace DeepGo_CoreEngine
         public int y0;
         public int x1;
         public int y1;
-        public int w { get { return x1 - x0; }  set { } }
-        public int h { get { return y1 - y0; }  set { } }
+        public int w { get { return x1 - x0; } set { } }
+        public int h { get { return y1 - y0; } set { } }
 
         public string type;
         public string content;
 
-        public BoxInfo( int x0, int y0, int x1, int y1, string type, string content )
+        public BoxInfo( int x0, int x1, int y0, int y1, string type, string content )
         {
             this.x0 = x0;
-            this.y0 = y0;
             this.x1 = x1;
+            this.y0 = y0;
             this.y1 = y1;
             this.type = type;
             this.content = content;
+        }
+
+        public BoxInfo( string[] list )
+        {
+            this.x0 = int.Parse( list[0] );
+            this.x1 = int.Parse( list[1] );
+            this.y0 = int.Parse( list[2] );
+            this.y1 = int.Parse( list[3] );
+            this.type = list[4];
+            this.content = list[5];
         }
     }
 
@@ -47,11 +82,37 @@ namespace DeepGo_CoreEngine
     {
         public static List<ResDocData> ResultToDataClass( this string resultPath )
         {
-            string[][] res = ReadCsv2String(resultPath , rowskip: 1 );
-            res.Act( x => x.Print() );
+            List<ResDocData> resuletlist = new List<ResDocData>();
 
-            return null;
+            // Read Csv File
+            string[][] res = ReadCsv2String(resultPath , rowskip: 1 , order0Dirction : false);
+            
+            // Group by Personal ID
+            var result = res.GroupBy(x => x[0] )
+                           .Select(x => new { key = x.Key , data = x.ToArray() } ).ToList();
+
+            
+            foreach ( var item in result )
+            {
+                // Group by Doc ID
+                var sameperson = item.data.GroupBy(x => x[1] ).Select(x => new { key = x.Key , data = x.ToArray() } ).ToList();
+                List<ResDocData> docdatalist = new List<ResDocData>();
+                foreach ( var docdata in sameperson )
+                {
+                    string[] infolist = docdata.data.First().Skip(1).Take(6).ToArray();
+                    var boxinfolist = docdata.data.Select(x => x.Skip(7).ToArray()).ToArray().ToBoxInfo();
+                    ResDocData output = new ResDocData(infolist ,boxinfolist );
+                    docdatalist.Add( output );
+                }
+                resuletlist.Add( new IDPersonData( item.key, docdatalist ) );
+            }
+
+            return resuletlist;
         }
+
+        public static List<BoxInfo> ToBoxInfo( this string[][] datalist )
+            => datalist.Select( x => new BoxInfo(x) ).ToList();
+            
 
 
     }
