@@ -38,7 +38,7 @@ namespace DeepGo_App
     public partial class MainWindow : MetroWindow
     {
         List<GridData> PathList;
-        List<IDPersonData> DataInfoAll;
+        List<ResDocData> DataInfoAll;
 
         public MainWindow()
         {
@@ -62,7 +62,7 @@ namespace DeepGo_App
             DisplayPathImg();
         }
 
-        public void SetLoadFile( List<IDPersonData> dataInfoAll )
+        public void SetLoadFile( List<ResDocData> dataInfoAll )
         {
             //global
             PathList = dataInfoAll.ToGridDataList();

@@ -21,20 +21,21 @@ namespace DeepGo_CoreEngine
         public int          BarcodeYDoc       ;
         public List<BoxInfo> BoxInfoList       ;
 
-        public ResDocData( string idp , string[] data, List<BoxInfo> infolist )
+        public ResDocData( string[] data, List<BoxInfo> infolist )
         {
-            IDPerson = idp;
-            IDDoc = data[0];
-            ImgPath = data[1];
-            BarcodeXPerson = int.Parse( data[2] );
-            BarcodeYPerson = int.Parse( data[3] );
-            BarcodeXDoc = int.Parse( data[4] );
-            BarcodeYDoc = int.Parse( data[5] );
+            IDPerson = data[0];
+            IDDoc = data[1];
+            ImgPath = data[2];
+            BarcodeXPerson = int.Parse( data[3] );
+            BarcodeYPerson = int.Parse( data[4] );
+            BarcodeXDoc = int.Parse( data[5] );
+            BarcodeYDoc = int.Parse( data[6] );
             BoxInfoList = infolist;
         }
 
-        public ResDocData( string idd, string imgpath, int barpx, int barpy, int bardx, int bardy, List<BoxInfo> infolist )
+        public ResDocData( string pid , string idd, string imgpath, int barpx, int barpy, int bardx, int bardy, List<BoxInfo> infolist )
         {
+            IDPerson = pid;
             IDDoc = idd;
             ImgPath = imgpath;
             BarcodeXPerson = barpx;
@@ -88,24 +89,17 @@ namespace DeepGo_CoreEngine
             string[][] res = ReadCsv2String(resultPath , rowskip: 1 , order0Dirction : false);
             
             // Group by Personal ID
-            var result = res.GroupBy(x => x[0] )
+            var grouped = res.GroupBy(x => x[1] )
                            .Select(x => new { key = x.Key , data = x.ToArray() } ).ToList();
-
             
-            foreach ( var item in result )
+            foreach ( var docdata in grouped )
             {
-                // Group by Doc ID
-                var sameperson = item.data.GroupBy(x => x[1] ).Select(x => new { key = x.Key , data = x.ToArray() } ).ToList();
-                List<ResDocData> docdatalist = new List<ResDocData>();
-                foreach ( var docdata in sameperson )
-                {
-                    string[] infolist = docdata.data.First().Skip(1).Take(6).ToArray();
-                    var boxinfolist = docdata.data.Select(x => x.Skip(7).ToArray()).ToArray().ToBoxInfo();
-                    ResDocData output = new ResDocData(infolist ,boxinfolist );
-                    docdatalist.Add( output );
-                }
-                resuletlist.Add( new IDPersonData( item.key, docdatalist ) );
+                string[] infolist = docdata.data.First().Take(7).ToArray();
+                var boxinfolist = docdata.data.Select(x => x.Skip(7).ToArray()).ToArray().ToBoxInfo();
+                ResDocData output = new ResDocData(infolist ,boxinfolist );
+                resuletlist.Add( output );
             }
+                
 
             return resuletlist;
         }

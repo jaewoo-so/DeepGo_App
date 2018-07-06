@@ -8,11 +8,9 @@ namespace DeepGo_CoreEngine
 {
     public class Core_DeepGo
     {
-        public void CreateButton( List<IDPersonData> idp, int idx )
+        public void CreateButton( List<ResDocData> idp, int idx )
         {
-            var currentPid = idp
-            var selectedData = idp.
-
+          
 
         }
 
