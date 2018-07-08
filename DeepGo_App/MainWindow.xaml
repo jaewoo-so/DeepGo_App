@@ -7,15 +7,16 @@
         xmlns:uc="clr-namespace:DeepGo_App"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
+        x:Name="winMain"
         Title="Theragen DeepGO" Height="800" Width="1300" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" 
                       ShowIconOnTitleBar="False" 
                       GlowBrush = "White" 
                       BorderThickness="1">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.6*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -64,10 +65,18 @@
                 </DataGrid>
             </Border>
         </Grid>
-
-        <Border Grid.Column="1" Grid.Row="1" BorderBrush="White" BorderThickness="2" Margin="5">
-            <uc:MainDisplay x:Name="cvsMainDisplay" Grid.Column="1" Background="Transparent" />
-        </Border>
+        <Viewbox Grid.Row="1" Grid.Column="1" Stretch="Fill">
+            <!--
+            <Border  BorderBrush="White" BorderThickness="2" Margin="5">
+                <Canvas x:Name="cvsMainDisplay" AllowDrop="True" Drop="ImgBack_Drop" >
+                    <Canvas.Background>
+                        <ImageBrush x:Name="ImgBack" Stretch="UniformToFill"  RenderOptions.BitmapScalingMode="Fant" />
+                    </Canvas.Background>
+                </Canvas>
+            </Border>
+            -->
+            <uc:UC_MainDisplay x:Name="ucMainDisply"  AllowDrop="True" Drop="ImgBack_Drop" Background="Transparent"/>
+        </Viewbox>
 
         <Border Grid.Column="2" Grid.Row="1" BorderBrush="White" BorderThickness="2" Margin="5">
           

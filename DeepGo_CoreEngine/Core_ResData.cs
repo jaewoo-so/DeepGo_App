@@ -12,6 +12,7 @@ namespace DeepGo_CoreEngine
 
     public class ResDocData
     {
+        public string       Key   { get { return IDPerson + IDDoc; } }
         public string       IDPerson         ;
         public string       IDDoc            ;
         public string       ImgPath          ;
@@ -87,11 +88,12 @@ namespace DeepGo_CoreEngine
 
             // Read Csv File
             string[][] res = ReadCsv2String(resultPath , rowskip: 1 , order0Dirction : false);
-            
+            res = res.Select( x => x.CombineFromList() ).ToArray();
             // Group by Personal ID
-            var grouped = res.GroupBy(x => x[1] )
-                           .Select(x => new { key = x.Key , data = x.ToArray() } ).ToList();
+            var grouped = res.GroupBy(x => x[0] )
+                           .Select(x => new { key = x.Key , data = x.ToArray().Select( y => y.Skip(1).ToArray()   ) }).ToList();
             
+            // docdata = {key = "" , data = string[][]}
             foreach ( var docdata in grouped )
             {
                 string[] infolist = docdata.data.First().Take(7).ToArray();
@@ -102,6 +104,13 @@ namespace DeepGo_CoreEngine
                 
 
             return resuletlist;
+        }
+
+        public static string[] CombineFromList( this string[] strlist )
+        {
+            var comb = new string[]{ strlist[0] + strlist[1] };
+            return comb.Concat( strlist ).ToArray();
+
         }
 
         public static List<BoxInfo> ToBoxInfo( this string[][] datalist )

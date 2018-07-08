@@ -33,6 +33,7 @@ namespace DeepGo_App
     public partial class MainDisplay : UserControl
     {
         public event Action<List<string>> evtDropFiles;
+        public ResDocData SelectedDoc;
 
         public MainDisplay()
         {
@@ -77,10 +78,66 @@ namespace DeepGo_App
                 // path doesn't exist.
 
             }
-
-
-
-            
         }
+
+
+        #region Create Modify event and funtion
+        public void DrawBtn( ResDocData infos ) 
+        {
+            // Set Current Doc
+            SelectedDoc = infos;
+
+            cvsMainDisplay.Children.Clear();
+            int posNum = infos.BoxInfoList.Count;
+            Button[] btn = new Button[posNum];
+
+            for ( int i = 0 ; i < posNum ; i++ )
+            {
+                var box = infos.BoxInfoList[i];
+                var w = box.x1 - box.x0;
+                var h = box.y1 - box.y0;
+
+                // Bind event
+                var newbtn = CheckButton( i , w , h );
+                Canvas.SetLeft( newbtn, box.x0 );
+                Canvas.SetTop( newbtn, box.y0 );
+
+                cvsMainDisplay.Children.Add( newbtn );
+                btn[i] = newbtn;
+            }
+        }
+
+        private Button CheckButton( int i , int w , int h ) 
+        {
+            var btn = new Button();
+            btn.Name = "btn_" + i.ToString();
+            btn.Width = w;
+            btn.Height = h;
+            btn.Opacity = 0.9;
+            btn.Background = Brushes.LawnGreen;
+            btn.Click += ClickIdx;
+            return btn;
+        }
+
+        public void ClickIdx( object sender, RoutedEventArgs e ) 
+        {
+            try
+            {
+                var self = sender as Button;
+                var name = self.Name;
+                var idx = name.Split('_').Last().Split('.').First();
+                this.IsEnabled = false;
+                Win_ModifyNum mnum = new Win_ModifyNum();
+                mnum.ShowDialog();
+            }
+            catch ( Exception ex )
+            { ex.Print( "Map Click Error Msg " ); }
+
+        }
+
+        #endregion  
+
+
+
     }
 }

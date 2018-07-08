@@ -101,6 +101,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UC_MainDisplay.xaml.cs">
+      <DependentUpon>UC_MainDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win_ModifyNum.xaml.cs">
+      <DependentUpon>Win_ModifyNum.xaml</DependentUpon>
+    </Compile>
     <Page Include="BaseStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,6 +139,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MenuLeft.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC_MainDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_ModifyNum.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
